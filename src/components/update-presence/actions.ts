@@ -21,7 +21,7 @@ export async function updatePresence(values: z.infer<typeof formSchema>) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ message: values.content }),
     });
-    const json: { isProfanity: boolean; score: number } = await res.json();
+    const json = (await res.json()) as { isProfanity: boolean; score: number };
 
     if (json.isProfanity === true) {
       return {
