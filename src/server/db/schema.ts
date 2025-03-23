@@ -17,6 +17,7 @@ export const presence = createTable("presence", (d) => ({
     .notNull()
     .references(() => users.id),
   content: d.text("content").notNull(),
+  createdAt: d.timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
 }));
 
 export const users = createTable("user", (d) => ({
