@@ -2,9 +2,11 @@ import { DB } from "~/server/db/queries";
 
 export async function GET(
   req: Request,
-  { params }: { params: { name: string } },
+  { params }: { params: Promise<{ name: string }> },
 ) {
-  const user = await DB.user.getUserFromName(params.name);
+  const { name } = await params;
+
+  const user = await DB.user.getUserFromName(name);
   if (!user) {
     return Response.json(
       { success: false, message: "User Not Found" },
