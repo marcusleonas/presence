@@ -7,15 +7,21 @@ import { DeleteButton } from "~/components/delete-button";
 import { UpdatePresence } from "~/components/update-presence";
 import { Input } from "~/components/ui/input";
 
-export default async function Page({ params }: { params: { name: string } }) {
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ name: string }>;
+}) {
+  const { name } = await params;
+
   const session = await auth();
-  const user = await DB.user.getUserFromName(params.name);
+  const user = await DB.user.getUserFromName(name);
 
   if (!user) {
     return notFound();
   }
 
-  const canEdit = session?.user.name === params.name;
+  const canEdit = session?.user.name === name;
 
   const presences = await DB.presence.getUserPresences(user.id);
 
