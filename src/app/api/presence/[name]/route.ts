@@ -10,7 +10,12 @@ export async function GET(
   if (!user) {
     return Response.json(
       { success: false, message: "User Not Found" },
-      { status: 404 },
+      {
+        status: 404,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+        },
+      },
     );
   }
 
@@ -23,7 +28,12 @@ export async function GET(
         presence: "No presence set",
         lastUpdated: Date.now(),
       },
-      { status: 200 },
+      {
+        status: 200,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+        },
+      },
     );
   }
 
@@ -33,6 +43,11 @@ export async function GET(
       presence: presence?.content,
       lastUpdated: presence.createdAt,
     },
-    { status: 200 },
+    {
+      status: 200,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+      },
+    },
   );
 }
