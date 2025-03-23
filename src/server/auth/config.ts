@@ -38,7 +38,18 @@ declare module "next-auth" {
  */
 export const authConfig = {
   providers: [
-    DiscordProvider,
+    DiscordProvider({
+      profile(profile) {
+        return {
+          id: profile.id,
+          name: profile.username, // Use username instead of global_name
+          email: profile.email,
+          image: profile.avatar
+            ? `https://cdn.discordapp.com/avatars/${profile.id}/${profile.avatar}.png`
+            : null,
+        };
+      },
+    }),
     /**
      * ...add more providers here.
      *

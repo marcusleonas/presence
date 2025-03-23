@@ -11,11 +11,14 @@ import { type AdapterAccount } from "next-auth/adapters";
 export const createTable = pgTableCreator((name) => `presence_${name}`);
 
 export const presence = createTable("presence", (d) => ({
-  id: d.serial("id").primaryKey(),
+  id: d
+    .varchar("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
   userId: d
     .varchar("user_id")
     .notNull()
-    .references(() => users.id),
+    .references(() => users.id, { onDelete: "cascade" }),
   content: d.text("content").notNull(),
   createdAt: d.timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
 }));
@@ -26,7 +29,7 @@ export const users = createTable("user", (d) => ({
     .notNull()
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
-  name: d.varchar({ length: 255 }),
+  name: d.varchar({ length: 255 }).unique(),
   email: d.varchar({ length: 255 }).notNull(),
   emailVerified: d
     .timestamp({

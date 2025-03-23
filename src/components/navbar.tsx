@@ -11,10 +11,6 @@ const navLinks: { link: string; content: string }[] = [
     link: "/about",
     content: "about",
   },
-  {
-    link: "/me",
-    content: "me",
-  },
 ];
 
 export async function Navbar() {
@@ -31,6 +27,14 @@ export async function Navbar() {
             {link.content}
           </Link>
         ))}
+        {session && (
+          <Link
+            href={`/users/${session.user.name}`}
+            className="hover:underline"
+          >
+            me
+          </Link>
+        )}
       </nav>
       {session && (
         <div>
