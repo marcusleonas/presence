@@ -26,6 +26,7 @@ export async function GET(
       {
         success: true,
         presence: "No presence set",
+        author: name,
         lastUpdated: Date.now(),
       },
       {
@@ -41,6 +42,7 @@ export async function GET(
     {
       success: true,
       presence: presence?.content,
+      author: name,
       lastUpdated: presence.createdAt,
     },
     {
