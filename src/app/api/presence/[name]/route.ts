@@ -46,7 +46,7 @@ export async function GET(
       presence: presence?.content,
       author: name,
       date: presence.createdAt,
-      prettyDate: formatDistanceToNow(presence.createdAt),
+      prettyDate: formatDistanceToNow(presence.createdAt, { addSuffix: true }),
     },
     {
       status: 200,
