@@ -1,3 +1,4 @@
+import { formatDistanceToNow } from "date-fns";
 import { DB } from "~/server/db/queries";
 
 export async function GET(
@@ -27,7 +28,8 @@ export async function GET(
         success: true,
         presence: "No presence set",
         author: name,
-        lastUpdated: Date.now(),
+        date: Date.now(),
+        prettyDate: formatDistanceToNow(Date.now()),
       },
       {
         status: 200,
@@ -43,7 +45,8 @@ export async function GET(
       success: true,
       presence: presence?.content,
       author: name,
-      lastUpdated: presence.createdAt,
+      date: presence.createdAt,
+      prettyDate: formatDistanceToNow(presence.createdAt),
     },
     {
       status: 200,
